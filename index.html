@@ -1,17 +1,72 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg">
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg">
 <link rel="apple-touch-icon" href="icon-180.png">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="إشعارات">
+<meta name="theme-color" content="#0f172a">
 <title>تجربة الإشعارات</title>
-<style>body{font-family:system-ui,sans-serif;background:#0f172a;color:#f8fafc;padding:16px;max-width:520px;margin:auto}
-section{background:#1e293b;border-radius:12px;padding:12px;margin:12px 0}
-button,input{font-size:1.05rem;padding:10px;border-radius:8px;border:0;margin:4px}
-button{background:#38bdf8;color:#0f172a}pre{white-space:pre-wrap;font-size:.9rem}</style></head><body>
+<style>
+  body{font-family:system-ui,-apple-system,sans-serif;background:#0f172a;color:#f8fafc;padding:16px;max-width:520px;margin:auto;line-height:1.6}
+  h1{font-size:1.4rem}
+  h3{font-size:1rem;margin:0 0 8px}
+  section{background:#1e293b;border-radius:12px;padding:12px;margin:12px 0}
+  button,input{font-size:1.05rem;padding:10px;border-radius:8px;border:0;margin:4px 0;width:100%;box-sizing:border-box}
+  button{background:#38bdf8;color:#0f172a;font-weight:600}
+  button.ghost{background:#334155;color:#f8fafc;font-weight:400}
+  input{background:#0f172a;color:#f8fafc;border:1px solid #334155;direction:ltr;text-align:left}
+  pre{white-space:pre-wrap;font-size:.85rem;background:#0f172a;border-radius:8px;padding:8px;max-height:260px;overflow:auto}
+  .state{font-size:.95rem;color:#cbd5e1}
+  .hint{font-size:.8rem;color:#94a3b8;margin:6px 0 0}
+  .row{display:flex;gap:8px}
+  .row>*{flex:1}
+</style>
+</head>
+<body>
 <h1>🔔 تجربة الإشعارات</h1>
-<section><div id="state"></div><button id="perm">1) فعّل الإشعارات</button></section>
-<section><h3>بعد كام ثانية</h3><input id="sec" type="number" value="60" min="5"><button id="go">جدولة</button>
-<button id="now">إشعار فوري</button></section>
-<section><h3>في وقت محدد النهارده</h3><input id="at" type="time"><button id="goat">جدولة</button></section>
-<section><h3>السجل</h3><pre id="log"></pre></section>
-<script src="app.js"></script></body></html>
+
+<section>
+  <div id="state" class="state">…</div>
+  <button class="ghost" id="refresh">تحديث الحالة</button>
+</section>
+
+<section>
+  <h3>رابط السيرفر (Worker URL)</h3>
+  <input id="url" type="url" placeholder="https://xxxx.workers.dev" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <button id="save">حفظ الرابط</button>
+  <p class="hint">الرابط اللي هيطلعلك بعد ما تنشر الـ Worker على Cloudflare. بيتحفظ على الجهاز بس، مش في الريبو.</p>
+</section>
+
+<section>
+  <h3>1) الاشتراك</h3>
+  <button id="enable">فعّل الإشعارات واشترك</button>
+  <p class="hint">لازم تفتح التطبيق من الشاشة الرئيسية (مثبت)، مش من Safari.</p>
+</section>
+
+<section>
+  <h3>2) إشعار فوري من السيرفر</h3>
+  <button id="now">ابعت إشعار دلوقتي</button>
+  <button class="ghost" id="local">اختبار محلي (من غير سيرفر)</button>
+</section>
+
+<section>
+  <h3>3) إشعار مجدول من السيرفر</h3>
+  <div class="row">
+    <input id="min" type="number" value="2" min="0.2" step="0.5" inputmode="decimal">
+    <button id="go">جدولة بعد (دقيقة)</button>
+  </div>
+  <p class="hint">السيرفر بيشيك كل 5 دقايق، فالإشعار ممكن يتأخر لحد 5 دقايق عن الميعاد.</p>
+</section>
+
+<section>
+  <h3>السجل</h3>
+  <pre id="log"></pre>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
